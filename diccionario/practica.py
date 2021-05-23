@@ -130,8 +130,93 @@ def comprexString(string):
     #al terminar de recorrer el string inserta lo que quedo en ultimo elemento
     return_comprex_string= return_comprex_string + prevkey + str(dictSearch(dictComprex,prevkey))
     
-    return return_comprex_string      
-            
-            
+    return return_comprex_string
+
+#=========================================#
+#Ejercicio 9
+#Ocurrencia en Strings
+
+def ocurrenceSearch(T1,T2,consecutiveIndex,firstCharEqual):
+    #siendo T1: Diccionario con la palabra mayor
+    #siendo T2: Diccionario con la palabra a corroborar
+    #siendo consecutiveIndex: las veces que se han acertado caracteres
+    #siendo firstCharEqual: El indice del primer caracter en tener coinsidencia
     
-    return 
+    currentNode= T1[hash_Key(dictSearch(T2,consecutiveIndex), len(T1))]
+    
+    
+    try:
+        currentNode=currentNode.head
+        while currentNode:
+            if currentNode.value.key== T2[consecutiveIndex].head.value.key and currentNode.value.value==(firstCharEqual+consecutiveIndex): 
+                return True
+            currentNode=currentNode.nextNode
+        
+        return False
+    except  AttributeError:
+        return False
+    
+        
+
+def nextCharEqual(T1,T2,consecutiveIndex,firstCharEqual):
+    
+    currentNode= T1[hash_Key(dictSearch(T2,consecutiveIndex), len(T1))]
+    
+    try:
+        currentNode=currentNode.head
+        
+        while currentNode:
+            test=ocurrenceSearch(T1,T2,consecutiveIndex,firstCharEqual)
+            
+            if consecutiveIndex==len(T2-1) and test:
+                return True
+            
+            if test:
+                return nextCharEqual(T1,T2,consecutiveIndex+1,firstCharEqual)
+            
+            currentNode.nextNode
+        
+        return False     
+    
+    except AttributeError:
+        return False
+    
+
+def funcFirstCharEqual(T1,T2):
+    firstChar= T2[0].head.value.value
+    
+    currentFirstChar= T1[hash_Key(dictSearch(T2,0),len(T1))]
+    
+    try:
+        currentFirstChar=currentFirstChar.head
+        
+        while currentFirstChar:
+            if currentFirstChar.value.key== T2[0].head.value.value:
+                testFirstChar= nextCharEqual(T1,T2,0,currentFirstChar.value.value)
+            
+            if testFirstChar:
+                return print("T2 Existe en T1")
+            
+            if currentFirstChar.nextNode:
+                currentFirstChar= currentFirstChar.nextNode
+            else:
+                return print("T2 no existe en T1")
+    except AttributeError:
+        return ("T2 no existe en T1")               
+        
+
+def ocurrenceString(word1,word2):
+    #insertamos en un diccionario word1 (palabra que contiene )
+    dictContainerOcurrence=Array(len(word1),Dictionary())
+    for idx in range(0,len(word1)):        
+        dictInsert(dictContainerOcurrence,idx,word1[idx])
+    
+    #insertamos en un diccionario word2 (palabra a corroborar)    
+    dictOcurrence=Array(len(word2),Dictionary())
+    for idx in range(0,len(word1)):        
+        dictInsert(dictOcurrence,word1[idx],idx)
+        
+    funcFirstCharEqual(dictContainerOcurrence,dictOcurrence)
+
+        
+    return
