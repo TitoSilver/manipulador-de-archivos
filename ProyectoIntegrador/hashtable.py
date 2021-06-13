@@ -1,5 +1,5 @@
 from algo1 import *
-from linkedlist_lucho import *
+from linkedlist import *
 
 def h1(k,m):
   return k % m
