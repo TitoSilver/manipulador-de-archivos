@@ -1,5 +1,5 @@
 from algo1 import *
-from linkedlist import *
+from linkedlist_lucho import *
 
 def h1(k,m):
   return k % m
@@ -50,13 +50,17 @@ def insertHash(T,element):
 
 def searchHash(T,element):
   #recorre la tabla, si encuentra el elemento que se busca retorna el valor y el key.
-  m = len(T)
-  for pos in range(0,m):
-    if T[pos] != None:
-      current = T[pos].head
-      if current.key == element:
-        return current.key, current.value
-  return None
+    m = len(T)
+    key = gen_key(element,m)
+    for i in range(0,m):
+        pos = hash(key,i,m)
+        if T[pos] != None:
+            current = T[pos].head
+            #print(pos,":",current.key,element)
+            if current.key == element: #no se porque con algunas palabras no hace la comparacion.
+                print("match")
+                return current.key, current.value
+    return None
 
 
 def primo_mayor(numero):
