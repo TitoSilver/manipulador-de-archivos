@@ -1,9 +1,11 @@
+#from linkedlist import printlist
 from mydictionary import *
 from linkedlist import *
 from test_files import *
 import os
 from tools import *
 import sys, os
+from hashtable import *
 
 class Node_file:
     def __init__(self,name_file,hash_of_words):
@@ -13,7 +15,7 @@ class Node_file:
 list_file= LinkedList()
 def create (path):
     print("llega aca1")
-    path= r"D:\Back up\FACULTAD\Algoritmos y Estructura de Datos II\codigo\ProyectoIntegrador\test_files"
+    path= r"C:\Users\Omen\Documents\FACULTAD\2°Año\1°Semestre\Algoritmos_2\proyecto-grupo4\ProyectoIntegrador\test_files"
     print("llega aca2")
     with os.scandir(path) as it:
         listOfWords=LinkedList()
@@ -26,10 +28,14 @@ def create (path):
                     count_words= 0
                     
                     for line in lines:
+                        #recorre cada linea y devuelve el número de palabras (en la linea) y una lista con una palabra por nodo.
                         count,newList=travel_line(line)
                         count_words += count
                         if newList:
+                            #inserta en la nueva lista la lista con todos los elementos anteriores, devuelve una lista con todas las palabras encontradas hasta el momento.
                             listOfWords= concatenateList(newList,listOfWords)
+                    
+                    #printList(listOfWords,0)
                     
                     #add(list_file,Node_file(fileNameOnly,listOfWords))
                     print("cant Palabras: ",count_words)       
@@ -37,8 +43,20 @@ def create (path):
                     while currentNode:
                         print("palabra: ",currentNode.value)
                         currentNode=currentNode.nextNode
-            
+                    
+                    m = primo_mayor(count_words) #encuentra el primo mayor al numero de palabras en el archivo.
+                    T = Array(m,LinkedList()) #crea la tabla.
+                    current = listOfWords.head 
+                    it = 0
+                    while current: #inserta cada palabra en la tabla.
+                        insertHash(T,current.value)
+                        current = current.nextNode
+
+                    addValue(list_file,T) #agrega la tabla con las palabras a la LinkedList.
+        
             listOfWords.head= None
+            
+    return list_file
 
 
 if __name__ == '__main__':
