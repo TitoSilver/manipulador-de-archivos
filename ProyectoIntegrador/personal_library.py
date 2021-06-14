@@ -7,10 +7,15 @@ from tools import *
 import sys, os
 from hashtable import *
 
+"""
 class Node_file:
     def __init__(self,name_file,hash_of_words):
         self.nameFile: name_file
         self.hash_of_words: hash_of_words
+"""
+class Node_file:
+    nameFile = None
+    hash_of_words = None
         
 list_file= LinkedList()
 def create (path):
@@ -47,15 +52,28 @@ def create (path):
                     m = primo_mayor(count_words) #encuentra el primo mayor al numero de palabras en el archivo.
                     T = Array(m,LinkedList()) #crea la tabla.
                     current = listOfWords.head 
-                    it = 0
                     while current: #inserta cada palabra en la tabla.
                         insertHash(T,current.value)
                         current = current.nextNode
-
-                    addValue(list_file,T) #agrega la tabla con las palabras a la LinkedList.
+                    #creo el nodo que contiene el nombre del archivo y la tabla hash con todas las palabras.     
+                    Nodo = Node_file()
+                    Nodo.nameFile = fileNameOnly
+                    Nodo.hash_of_words = T
+                    addValue(list_file,Nodo)#agrega la tabla con las palabras a la LinkedList.
         
             listOfWords.head= None
-                 
+
+    current = list_file.head
+    while current:
+        print(current.value.nameFile)
+        element = current.value.hash_of_words
+        for i in range(0,len(element)):
+            if element[i] != None:
+                print(element[i].head.key,end=" ")
+                print(element[i].head.value)
+            else:
+                print(None)
+        current = current.nextNode
     return list_file
 
 
@@ -103,8 +121,7 @@ if __name__ == '__main__':
     # py personal_library.py --create C:\Users\ULTRABYTES\Desktop\test_files
     # py personal_library.py -create C:\Users\ULTRABYTES\Desktop\test_files
         #Prueba Path Luciano:
-    #Si queres escribi el comando para ejecutar el script, así solo tenes que copíar y pegar para diferentes test, Sino, vas a tener que escribir la linea
-    #constantemente.
+    # py personal_library.py --create C:\Users\Omen\Documents\FACULTAD\2Ano\1Semestre\Algoritmos_2\proyecto-grupo4\ProyectoIntegrador\test_files
         
     #===============================================================================================================================================#
     
