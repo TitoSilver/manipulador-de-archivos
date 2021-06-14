@@ -43,11 +43,13 @@ def create (path):
                         #FORMA EN LA QUE DEBE INSERTARSE LOS NODOS 
                     #add(list_file,Node_file(fileNameOnly,listOfWords))
                     
-                    print("cant Palabras: ",count_words)       
+                    print("cant Palabras: ",count_words)      
+                    """ 
                     currentNode=listOfWords.head
                     while currentNode:
                         #print("palabra: ",currentNode.value)
                         currentNode=currentNode.nextNode
+                    """
                     
                     m = primo_mayor(count_words) #encuentra el primo mayor al numero de palabras en el archivo.
                     T = Array(m,LinkedList()) #crea la tabla.
@@ -63,6 +65,7 @@ def create (path):
         
             listOfWords.head= None
 
+    #hace un print del contenido de las tablas.
     current = list_file.head
     while current:
         print(current.value.nameFile)
@@ -74,6 +77,7 @@ def create (path):
             else:
                 print(None)
         current = current.nextNode
+
     return list_file
 
 
