@@ -8,6 +8,7 @@ import sys, os
 from hashtable import *
 
 class Node_file:
+    #Preguntar al profe si se puede crear un nodo mediante __init__
     def __init__(self,name_file,hash_of_words):
         self.nameFile: name_file
         self.hash_of_words: hash_of_words
@@ -41,13 +42,12 @@ def create (path):
                     print("cant Palabras: ",count_words)       
                     currentNode=listOfWords.head
                     while currentNode:
-                        #print("palabra: ",currentNode.value)
+                        print("palabra: ",currentNode.value)
                         currentNode=currentNode.nextNode
                     
                     m = primo_mayor(count_words) #encuentra el primo mayor al numero de palabras en el archivo.
                     T = Array(m,LinkedList()) #crea la tabla.
-                    current = listOfWords.head 
-                    it = 0
+                    current = listOfWords.head
                     while current: #inserta cada palabra en la tabla.
                         insertHash(T,current.value)
                         current = current.nextNode
@@ -84,8 +84,9 @@ if __name__ == '__main__':
     elif listArguments[1]== "--create" or listArguments[1]== "-create":
         if os.path.exists(listArguments[2]):
             print("el path que pasa como parametro es: ",listArguments[2])
-            if os.path.exists(listArguments[2]):
-                create(listArguments[2])
+            create(listArguments[2])
+        else:
+            print("El path ingresado no es correcto. Por favor, Intente nuevamente")
     
     elif listArguments[1]== "--search" or listArguments[1]== "-search":
         print("uwu")
