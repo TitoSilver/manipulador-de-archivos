@@ -10,10 +10,11 @@ class LinkedList:
 #Se crea la clase Node:
 class Node:
   value= None
+  key = None
   nextNode= None
 
 #===============================#
-def add(L,element): #Agrega un nuevo Nodo al comienzo de L
+def addValue(L,element): #Agrega un nuevo Nodo al comienzo de L
   #Crea el Nodo 
   nodeA= Node()
   nodeA.value=element
@@ -25,6 +26,18 @@ def add(L,element): #Agrega un nuevo Nodo al comienzo de L
     nodeA.nextNode= L.head
 
   L.head= nodeA
+  return
+#===============================#
+#===============================#
+def add(L,element):
+  #Descripción: Agrega un elemento al comienzo de L, siendo L una LinkedList que representa el TAD secuencia.
+  #Entrada: La Lista sobre la cual se quiere agregar el elemento (LinkedList) y el valor del elemento (element) a agregar.
+  #Salida: No hay salida definida.
+  #print(element)
+  currentNode = Node()
+  currentNode.key = element
+  currentNode.nextNode = L.head
+  L.head = currentNode
   return
 #===============================#
 #===============================#
@@ -151,3 +164,30 @@ def concatenateList(list1,list2):
   currentNode.nextNode= list2.head
   
   return list1
+
+
+#===============================#
+def printList(L, index):
+	list_len = list_length(L)
+	if index == 0 or index >= list_len:
+		index = list_len
+	current_node = L.head
+	for i in range(index):
+		if current_node.nextNode:
+			print(current_node.value,"->", end = " ")
+		else: 
+			print(current_node.value)
+		current_node = current_node.nextNode
+#===============================#
+#===============================#
+def append(List, element):
+	newNode = Node()
+	newNode.value = element
+	currentNode = List.head
+	if List.head==None:
+		List.head=newNode
+	else:
+		while currentNode!=None:
+			prevNode=currentNode
+			currentNode = currentNode.nextNode
+		prevNode.nextNode=newNode

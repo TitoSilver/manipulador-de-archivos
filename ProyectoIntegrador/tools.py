@@ -14,13 +14,13 @@ def travel_line(line):
         else:
             if element== " ":
                 count_words += 1
-                add(list_of_words,word)
+                addValue(list_of_words,word)
                 word= ""
             else:
                 word += element
 
     count_words += 1
-    add(list_of_words,word)
+    addValue(list_of_words,word)
     
     #retorna la cantidad de palabras y la lista de palabras
     #en la linea
