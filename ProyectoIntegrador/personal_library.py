@@ -7,11 +7,16 @@ from tools import *
 import sys, os
 from hashtable import *
 
+"""
 class Node_file:
     #Preguntar al profe si se puede crear un nodo mediante __init__
     def __init__(self,name_file,hash_of_words):
         self.nameFile: name_file
         self.hash_of_words: hash_of_words
+"""
+class Node_file:
+    nameFile = None
+    hash_of_words = None
         
 list_file= LinkedList()
 def create (path):
@@ -20,7 +25,7 @@ def create (path):
         for file in it:
             if file.is_file() and ".txt" in file.name:
                 fileNameOnly= file
-                print(file.name)            
+                            
                 with open(path+"\\"+file.name,"r") as file:
                     lines= file.readlines()
                     count_words= 0
@@ -39,23 +44,43 @@ def create (path):
                         #FORMA EN LA QUE DEBE INSERTARSE LOS NODOS 
                     #add(list_file,Node_file(fileNameOnly,listOfWords))
                     
-                    print("cant Palabras: ",count_words)       
+                    print("cant Palabras: ",count_words)  
+                    """     
                     currentNode=listOfWords.head
                     while currentNode:
                         print("palabra: ",currentNode.value)
                         currentNode=currentNode.nextNode
-                    
+                    """
                     m = primo_mayor(count_words) #encuentra el primo mayor al numero de palabras en el archivo.
                     T = Array(m,LinkedList()) #crea la tabla.
                     current = listOfWords.head
+                    current = listOfWords.head 
                     while current: #inserta cada palabra en la tabla.
                         insertHash(T,current.value)
                         current = current.nextNode
-
-                    addValue(list_file,T) #agrega la tabla con las palabras a la LinkedList.
+                    #creo el nodo que contiene el nombre del archivo y la tabla hash con todas las palabras.     
+                    Nodo = Node_file()
+                    Nodo.nameFile = fileNameOnly
+                    Nodo.hash_of_words = T
+                    addValue(list_file,Nodo)#agrega la tabla con las palabras a la LinkedList.
         
             listOfWords.head= None
-                 
+
+    current = list_file.head
+    while current:
+        print("Nombre del archivo: ",current.value.nameFile)
+        element = current.value.hash_of_words
+        print("{",end="")
+        for i in range(0,len(element)):            
+            if element[i] != None:
+                print("(",end="")
+                print(element[i].head.key,end=":")
+                print(element[i].head.value,end="")
+                print(")",end=",")
+            else:
+                print(None,end=",")
+        print("}")
+        current = current.nextNode
     return list_file
 
 
@@ -104,8 +129,7 @@ if __name__ == '__main__':
     # py personal_library.py --create C:\Users\ULTRABYTES\Desktop\test_files
     # py personal_library.py -create C:\Users\ULTRABYTES\Desktop\test_files
         #Prueba Path Luciano:
-    #Si queres escribi el comando para ejecutar el script, así solo tenes que copíar y pegar para diferentes test, Sino, vas a tener que escribir la linea
-    #constantemente.
+    # py personal_library.py --create C:\Users\Omen\Documents\FACULTAD\2Ano\1Semestre\Algoritmos_2\proyecto-grupo4\ProyectoIntegrador\test_files
         
     #===============================================================================================================================================#
     
