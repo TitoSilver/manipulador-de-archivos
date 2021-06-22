@@ -9,10 +9,13 @@ def travel_line(line):
     if line== "\n":
         return 0, None
     for element in line:
+        element= element.lower()
         if (element== " " or element== "\n" )and word =="":
-            continue
+            continue        
         else:
-            if element== " ":
+            if element=="\n" or element==".":
+                continue
+            if element== " " or element=="," or element==".":
                 count_words += 1
                 addValue(list_of_words,word)
                 word= ""

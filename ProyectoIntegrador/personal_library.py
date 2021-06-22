@@ -9,6 +9,7 @@ from hashtable import *
 
 """
 class Node_file:
+    #Preguntar al profe si se puede crear un nodo mediante __init__
     def __init__(self,name_file,hash_of_words):
         self.nameFile: name_file
         self.hash_of_words: hash_of_words
@@ -24,7 +25,7 @@ def create (path):
         for file in it:
             if file.is_file() and ".txt" in file.name:
                 fileNameOnly= file
-                print(file.name)            
+                            
                 with open(path+"\\"+file.name,"r") as file:
                     lines= file.readlines()
                     count_words= 0
@@ -41,18 +42,19 @@ def create (path):
                     #printList(listOfWords,0)
                     
                         #FORMA EN LA QUE DEBE INSERTARSE LOS NODOS 
-                    #add(list_file,Node_file(fileNameOnly,listOfWords))
+                    #add(list_file,Node_file(fileNameOnly,listOfWords))    
                     
-                    print("cant Palabras: ",count_words)      
-                    """ 
+                    print("cant Palabras: ",count_words)  
+                    """     
                     currentNode=listOfWords.head
                     while currentNode:
-                        #print("palabra: ",currentNode.value)
+                        print("palabra: ",currentNode.value)
                         currentNode=currentNode.nextNode
                     """
                     
                     m = primo_mayor(count_words) #encuentra el primo mayor al numero de palabras en el archivo.
                     T = Array(m,LinkedList()) #crea la tabla.
+                    current = listOfWords.head
                     current = listOfWords.head 
                     while current: #inserta cada palabra en la tabla.
                         insertHash(T,current.value)
@@ -68,14 +70,18 @@ def create (path):
     #hace un print del contenido de las tablas.
     current = list_file.head
     while current:
-        print(current.value.nameFile)
+        print("Nombre del archivo: ",current.value.nameFile)
         element = current.value.hash_of_words
-        for i in range(0,len(element)):
+        print("{",end="")
+        for i in range(0,len(element)):            
             if element[i] != None:
-                print(element[i].head.key,end=" ")
-                print(element[i].head.value)
+                print("(",end="")
+                print(element[i].head.key,end=":")
+                print(element[i].head.value,end="")
+                print(")",end=",")
             else:
-                print(None)
+                print(None,end=",")
+        print("}")
         current = current.nextNode
 
     return list_file
@@ -106,8 +112,9 @@ if __name__ == '__main__':
     elif listArguments[1]== "--create" or listArguments[1]== "-create":
         if os.path.exists(listArguments[2]):
             print("el path que pasa como parametro es: ",listArguments[2])
-            if os.path.exists(listArguments[2]):
-                create(listArguments[2])
+            create(listArguments[2])
+        else:
+            print("El path ingresado no es correcto. Por favor, Intente nuevamente")
     
     elif listArguments[1]== "--search" or listArguments[1]== "-search":
         print("uwu")
