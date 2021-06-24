@@ -1,4 +1,6 @@
-#from linkedlist import printlist
+# -*- coding: utf-8 -*-
+
+
 from mydictionary import *
 from linkedlist import *
 from test_files import *
@@ -19,7 +21,9 @@ def create (path):
         for file in it:
             if file.is_file() and ".txt" in file.name:
                 fileNameOnly= file.name
-                            
+                print("=================")
+                print("file name: ",fileNameOnly)
+                print("=================")        
                 with open(path+"\\"+file.name,"r") as file:
                     lines= file.readlines()
                     count_words= 0
@@ -70,6 +74,8 @@ def modulReadPickle (path_bin):
 
 if __name__ == '__main__':
     listArguments= sys.argv
+    
+    value= True
     if len(listArguments)!= 3:
         if len(listArguments) > 3:
             #En caso de pasar mas de 3 parametros (que el path ingresado tenga espacios en el nombre de los directorios), concatena los argumentos
@@ -83,15 +89,14 @@ if __name__ == '__main__':
         else:
             #Pasa un comando en el que faltan argumentos
             print("Por favor ingrese una instrucción valida")
+            value= False
     else:
         path= listArguments[2]
     
-    if listArguments[1]=="--create" or listArguments[1]=="-create":
+    if (listArguments[1]=="--create" or listArguments[1]=="-create") and value:
         if os.path.exists(path):
             print("el path que pasa como parametro es: ",path)
             hash_table_of_words= create(path)
-            
-            
             
             #despues de crear la lista la retornamos. Para luego crear el binario y que el código sea mas legible
             print("========================")
@@ -108,7 +113,7 @@ if __name__ == '__main__':
             
         else:
             print("El path ingresado no es correcto. Por favor, Intente nuevamente")
-    elif listArguments[1]== "--search" or listArguments[1]== "-search":
+    elif (listArguments[1]== "--search" or listArguments[1]== "-search") and value:
         print("uwu") 
         dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
         hash_table_of_words= modulReadPickle (dirBin)
@@ -131,7 +136,7 @@ if __name__ == '__main__':
             print("}")
             current = current.nextNode
     else:
-            print("El path ingresado no es correcto. Por favor, Intente nuevamente")
+        print("El path ingresado no es correcto. Por favor, Intente nuevamente")
             
     #===============================================================================================================================================#
                                     # PATH DE PRUEBA
@@ -142,7 +147,9 @@ if __name__ == '__main__':
     # py personal_library.py --create C:\Users\ULTRABYTES\Desktop\test_files
     # py personal_library.py -create C:\Users\ULTRABYTES\Desktop\test_files
     
-    # py personal_library.py -search
+    # py personal_library.py -create C:\Users\ULTRABYTES\Desktop\prueba-exp-char
+    
+    # py personal_library.py -search hola
     
     # py personal_library.py -create C:\Users\ULTRABYTES\Downloads\Test-Dataset
     

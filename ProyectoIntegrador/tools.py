@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from mydictionary import *
 from linkedlist import *
 
@@ -17,12 +19,14 @@ def travel_line(line):
                 continue
             if element== " " or element=="," or element==".":
                 count_words += 1
+                print("word a agregar: ",word)
                 addValue(list_of_words,word)
                 word= ""
             else:
                 word += element
-
+        
     count_words += 1
+        
     addValue(list_of_words,word)
     
     #retorna la cantidad de palabras y la lista de palabras
