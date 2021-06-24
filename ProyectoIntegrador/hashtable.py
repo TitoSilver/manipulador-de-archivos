@@ -58,9 +58,8 @@ def searchHash(T,element):
             current = T[pos].head
             #print(pos,":",current.key,element)
             if current.key == element:
-                print("match")
                 return current.key, current.value
-    return None
+    return None, None
 
 
 def primo_mayor(numero):

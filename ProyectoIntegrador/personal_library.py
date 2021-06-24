@@ -66,13 +66,15 @@ def search(list_file,key):
     Q = PriorityQueue()
     current = list_file.head
     while current:
+        #print("current.value.nameFile",current.value.nameFile)
         table = current.value.hash_of_words
         elemento, ocurrencias = searchHash(table,key)
-        enqueue_priority(Q,elemento,ocurrencias)
+        #print("elemento: ",elemento,"==> ",ocurrencias)
+        if elemento!=None  and ocurrencias != None:
+            enqueue_priority(Q,current.value.nameFile,ocurrencias)            
         current = current.nextNode
-    print("encontrado")
-    return Q
 
+    return Q
 
 def modulCreatePickle (list_files,path_bin):
     with  open(path_bin+ "\\binFile","bw") as binFile:
@@ -127,13 +129,18 @@ if __name__ == '__main__':
     elif (listArguments[1]== "--search" or listArguments[1]== "-search") and value:
         dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
         list_file = modulReadPickle (dirBin)
-
-        search(list_file,listArguments[2])
         
+        Q= search(list_file,listArguments[2])
+        print("\t"*3,"PRINT PRIORITY QUEUE")
+        current= Q.head
+        while current:
+            print("(",current.value,":",current.priority,")")
+            current = current.nextNode
+        print("\t"*4,"end")
         
-        #hace un print del contenido de las tablas.
         """
-        current = list_files.head
+        #hace un print del contenido de las tablas.        
+        current = list_file.head
         while current:
             print("Nombre del archivo: ",current.value.nameFile)
             element = current.value.hash_of_words
@@ -163,7 +170,7 @@ if __name__ == '__main__':
     
     # py personal_library.py -create C:\Users\ULTRABYTES\Desktop\prueba-exp-char
     
-    # py personal_library.py -search hola
+    # py personal_library.py -search can
     
     # py personal_library.py -create C:\Users\ULTRABYTES\Downloads\Test-Dataset
     
