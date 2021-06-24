@@ -57,7 +57,7 @@ def searchHash(T,element):
         if T[pos] != None:
             current = T[pos].head
             #print(pos,":",current.key,element)
-            if current.key == element: #no se porque con algunas palabras no hace la comparacion.
+            if current.key == element:
                 print("match")
                 return current.key, current.value
     return None

@@ -35,9 +35,9 @@ def dequeue(Q):
     return current.value, current.priority
 
 
-def insert_priority(L,element,position,priority): #Inserta un elemento en una posición determinada
+def insert_priority(Q,element,position,priority): #Inserta un elemento en una posición determinada
 
-  CurrentNode= L.head
+  CurrentNode= Q.head
   currentPosition= 0
 
   if position== 0:
@@ -64,25 +64,4 @@ def insert_priority(L,element,position,priority): #Inserta un elemento en una po
   else:
     return None
 
-
-
-Q = PriorityQueue()
-
-enqueue_priority(Q,"hola",1)
-enqueue_priority(Q,"vfrvd",6)
-enqueue_priority(Q,"hvedfa",5)
-enqueue_priority(Q,"cdferc",2)
-enqueue_priority(Q,"cduniunic",1)
-enqueue_priority(Q,"cdferc",2)
-enqueue_priority(Q,"hybuyhbuy",2)
-
-print(dequeue(Q))
-print(dequeue(Q))
-print(dequeue(Q))
-print(dequeue(Q))
-print(dequeue(Q))
-print(dequeue(Q))
-print(dequeue(Q))
-
-#printList(Q,0)
 

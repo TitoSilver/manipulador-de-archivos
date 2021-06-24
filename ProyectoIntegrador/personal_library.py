@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from mydictionary import *
 from linkedlist import *
 from test_files import *
@@ -9,6 +8,7 @@ from tools import *
 import sys, os
 from hashtable import *
 import pickle
+from priorityqueue import *
 
 class Node_file:
     nameFile = None
@@ -24,7 +24,7 @@ def create (path):
                 print("=================")
                 print("file name: ",fileNameOnly)
                 print("=================")        
-                with open(path+"\\"+file.name,"r") as file:
+                with open(path+"\\"+file.name,"r",encoding='utf-8') as file:
                     lines= file.readlines()
                     count_words= 0
                     
@@ -32,9 +32,12 @@ def create (path):
                         #recorre cada linea y devuelve el número de palabras (en la linea) y una lista con una palabra por nodo.
                         count,newList=travel_line(line)
                         count_words += count
+                        #printList(newList,0)
                         if newList:
-                            #inserta en la nueva lista la lista con todos los elementos anteriores, devuelve una lista con todas las palabras encontradas hasta el momento.
+                            #inserta en la nueva lista la lista con todos los elementos anteriores, 
+                            # devuelve una lista con todas las palabras encontradas hasta el momento.
                             listOfWords= concatenateList(newList,listOfWords)
+                    print(count_words)
                     
                     #agrega a la lista final el nodo con (nombre del archivo,hashTable del archivo)
                     #printList(listOfWords,0)
@@ -59,17 +62,26 @@ def create (path):
             
     return list_file
 
+def search(list_file,key):
+    Q = PriorityQueue()
+    current = list_file.head
+    while current:
+        table = current.value.hash_of_words
+        elemento, ocurrencias = searchHash(table,key)
+        enqueue_priority(Q,elemento,ocurrencias)
+        current = current.nextNode
+    print("encontrado")
+    return Q
 
-def modulCreatePickle (hash_table_of_words,path_bin):
+
+def modulCreatePickle (list_files,path_bin):
     with  open(path_bin+ "\\binFile","bw") as binFile:
-        pickle.dump(hash_table_of_words,binFile)
+        pickle.dump(list_files,binFile)
     
 def modulReadPickle (path_bin):
     with  open(path_bin+ "\\binFile","br") as binFile:
-        print("entra en el modulo with open")
-        hash_table_of_words=pickle.load(binFile)
-    
-    return hash_table_of_words  #retorna el hashtable con todas las palabras
+        list_files = pickle.load(binFile)
+    return list_files  #retorna el hashtable con todas las palabras
 
 
 if __name__ == '__main__':
@@ -96,10 +108,9 @@ if __name__ == '__main__':
     if (listArguments[1]=="--create" or listArguments[1]=="-create") and value:
         if os.path.exists(path):
             print("el path que pasa como parametro es: ",path)
-            hash_table_of_words= create(path)
+            list_file = create(path)
             
             #despues de crear la lista la retornamos. Para luego crear el binario y que el código sea mas legible
-            print("========================")
             dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
             if os.scandir(dirBin):  #verificamos su existencia
                 if len(os.listdir(dirBin))!=0: 
@@ -107,20 +118,22 @@ if __name__ == '__main__':
                     for element in os.listdir(dirBin):
                         os.remove(dirBin+"\\"+element)
                     
-            modulCreatePickle (hash_table_of_words,dirBin)
+            modulCreatePickle (list_file,dirBin)
         
             print("library created successfully")
             
         else:
             print("El path ingresado no es correcto. Por favor, Intente nuevamente")
     elif (listArguments[1]== "--search" or listArguments[1]== "-search") and value:
-        print("uwu") 
         dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
-        hash_table_of_words= modulReadPickle (dirBin)
+        list_file = modulReadPickle (dirBin)
+
+        search(list_file,listArguments[2])
         
         
         #hace un print del contenido de las tablas.
-        current = hash_table_of_words.head
+        """
+        current = list_files.head
         while current:
             print("Nombre del archivo: ",current.value.nameFile)
             element = current.value.hash_of_words
@@ -135,6 +148,7 @@ if __name__ == '__main__':
                     print(None,end="\n")
             print("}")
             current = current.nextNode
+        """
     else:
         print("El path ingresado no es correcto. Por favor, Intente nuevamente")
             
@@ -155,7 +169,7 @@ if __name__ == '__main__':
     
     
         #Prueba Path Luciano:
-    # py personal_library.py --create C:\Users\Omen\Documents\FACULTAD\2Ano\1Semestre\Algoritmos_2\proyecto-grupo4\ProyectoIntegrador\test_files
+    # py personal_library.py --create C:\Users\Omen\Documents\FACULTAD\2Ano\1Semestre\Algoritmos_2\proyecto-grupo4\ProyectoIntegrador\Test-Dataset
         
     #===============================================================================================================================================#
     

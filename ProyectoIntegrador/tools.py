@@ -12,14 +12,14 @@ def travel_line(line):
         return 0, None
     for element in line:
         element= element.lower()
-        if (element== " " or element== "\n" )and word =="":
+        if (element== " " or element== "\n" or element == "•")and word =="":
             continue        
         else:
-            if element=="\n" or element==".":
+            if element=="\n" or element=="." or element == "•":
                 continue
             if element== " " or element=="," or element==".":
                 count_words += 1
-                print("word a agregar: ",word)
+                #print("word a agregar: ",word)
                 addValue(list_of_words,word)
                 word= ""
             else:

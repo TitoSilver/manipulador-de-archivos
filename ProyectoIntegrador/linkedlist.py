@@ -168,7 +168,7 @@ def concatenateList(list1,list2):
 
 #===============================#
 def printList(L, index):
-	list_len = list_length(L)
+	list_len = length(L)
 	if index == 0 or index >= list_len:
 		index = list_len
 	current_node = L.head
