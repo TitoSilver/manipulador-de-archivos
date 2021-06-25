@@ -158,6 +158,7 @@ def concatenateList(list1,list2):
   currentNode= list1.head
   if list2.head== None:
     return list1
+
   while currentNode.nextNode:
     currentNode=currentNode.nextNode
   

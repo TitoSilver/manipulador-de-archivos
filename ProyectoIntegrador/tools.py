@@ -12,8 +12,28 @@ def travel_line(line):
         return 0, None
     for element in line:
         element= element.lower()
+        
+        if ord(element) in range(48, 58) or ord(element) in range(65,91) or ord(element) in range(97,123):
+            #Siendo las cifras desde (48,57)
+            #Siendo las letras mayusculas (65,90)
+            #Siendo las letras minusculas (97,122)
+            #se agrega un elemento mas al range para que incluya la cifra.
+            word += element
+        else:
+            if ord(element)== 8217 or ord(element)==39 or ord(element)==45:
+                #elemento especial(" ’ ") ; elemento especial (" ' ") ; elemento especial (" - ")
+                word += element
+            else:
+                if word!="":
+                    count_words += 1
+                    addValue(list_of_words,word)
+                    word=""
+                else:
+                    continue
+            
+        """
         if (element== " " or element== "\n" or element == "•")and word =="":
-            continue        
+            continue
         else:
             if element=="\n" or element=="." or element == "•":
                 continue
@@ -24,10 +44,12 @@ def travel_line(line):
                 word= ""
             else:
                 word += element
+        """
+    if word!= "":
+        count_words += 1        
+        addValue(list_of_words,word)
         
-    count_words += 1
-        
-    addValue(list_of_words,word)
+    return count_words, list_of_words
     
     #retorna la cantidad de palabras y la lista de palabras
     #en la linea
@@ -44,7 +66,7 @@ def travel_line(line):
     """
     
 
-    return count_words, list_of_words
+    
 """
 travel_line("hola como estas
             yo

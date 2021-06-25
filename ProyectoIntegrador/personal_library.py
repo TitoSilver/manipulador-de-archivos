@@ -33,7 +33,7 @@ def create (path):
                         count,newList=travel_line(line)
                         count_words += count
                         #printList(newList,0)
-                        if newList:
+                        if newList and newList.head:
                             #inserta en la nueva lista la lista con todos los elementos anteriores, 
                             # devuelve una lista con todas las palabras encontradas hasta el momento.
                             listOfWords= concatenateList(newList,listOfWords)
@@ -141,8 +141,10 @@ if __name__ == '__main__':
                 print("(",current.value,":",current.priority,")")
                 current = current.nextNode
             print("\t"*4,"end")
-        
         """
+        print("====================================")
+        print("\t"*4,"HASH_TABLE")
+        print("====================================")
         #hace un print del contenido de las tablas.        
         current = list_file.head
         while current:
