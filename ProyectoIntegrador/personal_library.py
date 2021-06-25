@@ -63,18 +63,17 @@ def create (path):
     return list_file
 
 def search(list_file,key):
-    Q = PriorityQueue()
+    Q = PriorityQueue() #crea una cola de prioridad.
     current = list_file.head
     while current:
-        #print("current.value.nameFile",current.value.nameFile)
+        #recorre la lista que contiene las tablas hash de cada archivo.
         table = current.value.hash_of_words
-        elemento, ocurrencias = searchHash(table,key)
-        #print("elemento: ",elemento,"==> ",ocurrencias)
+        elemento, ocurrencias = searchHash(table,key) #busca la palabra "key" en la tabla hash y devuelve el nombre del elemento y las ocurrencias en ese archivo.
         if elemento!=None  and ocurrencias != None:
+            #agrega a la cola de prioridad el nombre del archivo donde se encontró y las ocurrencias
+            # (este va a ser el parametro que de la prioridad en la cola).
             enqueue_priority(Q,current.value.nameFile,ocurrencias)
         current = current.nextNode
-    if Q.head == None:
-        print("no document found")
     return Q
 
 def modulCreatePickle (list_files,path_bin):
@@ -131,14 +130,17 @@ if __name__ == '__main__':
         dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
         list_file = modulReadPickle (dirBin)
         listArguments[2] = listArguments[2].lower()
-        
+
         Q= search(list_file,listArguments[2])
-        print("\t"*3,"PRINT PRIORITY QUEUE")
-        current= Q.head
-        while current:
-            print("(",current.value,":",current.priority,")")
-            current = current.nextNode
-        print("\t"*4,"end")
+        if Q.head == None:
+            print("\t"*4,"no document found")
+        else:
+            print("\t"*3,"PRINT PRIORITY QUEUE")
+            current= Q.head
+            while current:
+                print("(",current.value,":",current.priority,")")
+                current = current.nextNode
+            print("\t"*4,"end")
         
         """
         #hace un print del contenido de las tablas.        
