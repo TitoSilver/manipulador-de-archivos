@@ -71,9 +71,10 @@ def search(list_file,key):
         elemento, ocurrencias = searchHash(table,key)
         #print("elemento: ",elemento,"==> ",ocurrencias)
         if elemento!=None  and ocurrencias != None:
-            enqueue_priority(Q,current.value.nameFile,ocurrencias)            
+            enqueue_priority(Q,current.value.nameFile,ocurrencias)
         current = current.nextNode
-
+    if Q.head == None:
+        print("no document found")
     return Q
 
 def modulCreatePickle (list_files,path_bin):
@@ -129,6 +130,7 @@ if __name__ == '__main__':
     elif (listArguments[1]== "--search" or listArguments[1]== "-search") and value:
         dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
         list_file = modulReadPickle (dirBin)
+        listArguments[2] = listArguments[2].lower()
         
         Q= search(list_file,listArguments[2])
         print("\t"*3,"PRINT PRIORITY QUEUE")
