@@ -9,6 +9,7 @@ import sys, os
 from hashtable import *
 import pickle
 from priorityqueue import *
+from pathlib import Path
 
 class Node_file:
     nameFile = None
@@ -23,8 +24,9 @@ def create (path):
                 fileNameOnly= file.name
                 print("=================")
                 print("file name: ",fileNameOnly)
-                print("=================")        
-                with open(path+"\\"+file.name,"r",encoding='utf-8') as file:
+                print("=================")
+                pathDirectory= Path(path)      
+                with open(pathDirectory.joinpath(file.name),"r",encoding='utf-8') as file:
                     lines= file.readlines()
                     count_words= 0
                     
@@ -77,11 +79,11 @@ def search(list_file,key):
     return Q
 
 def modulCreatePickle (list_files,path_bin):
-    with  open(path_bin+ "\\binFile","bw") as binFile:
+    with  open(os.path.join(path_bin, "binFile"),"bw") as binFile:
         pickle.dump(list_files,binFile)
     
 def modulReadPickle (path_bin):
-    with  open(path_bin+ "\\binFile","br") as binFile:
+    with  open(os.path.join(path_bin, "binFile"),"br") as binFile:
         list_files = pickle.load(binFile)
     return list_files  #retorna el hashtable con todas las palabras
 
@@ -113,12 +115,18 @@ if __name__ == '__main__':
             list_file = create(path)
             
             #despues de crear la lista la retornamos. Para luego crear el binario y que el código sea mas legible
-            dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
+            #dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
+            dirBin= os.path.join("bin")
+            dirBin=Path(dirBin)
+            listaCompleta= os.listdir(dirBin)
+            print("ListaCompleta: ",listaCompleta)
+            
             if os.scandir(dirBin):  #verificamos su existencia
                 if len(os.listdir(dirBin))!=0: 
                     #Elimina los archivos de la carpeta bin para crear el nuevo binario
+                    
                     for element in os.listdir(dirBin):
-                        os.remove(dirBin+"\\"+element)
+                        os.remove(os.path.join(dirBin,element))
                     
             modulCreatePickle (list_file,dirBin)
         
@@ -127,7 +135,8 @@ if __name__ == '__main__':
         else:
             print("El path ingresado no es correcto. Por favor, Intente nuevamente")
     elif (listArguments[1]== "--search" or listArguments[1]== "-search") and value:
-        dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
+        #dirBin= os.getcwd()+ "\\bin"   #obtenemos el path de la carpeta bin
+        dirBin= os.path.join("bin")
         list_file = modulReadPickle (dirBin)
         listArguments[2] = listArguments[2].lower()
 
@@ -179,6 +188,9 @@ if __name__ == '__main__':
     # py personal_library.py -search can
     
     # py personal_library.py -create C:\Users\ULTRABYTES\Downloads\Test-Dataset
+
+    # python3 personal_library.py -create "/home/titosilver/Descargas/Test-Dataset"
+
     
     
         #Prueba Path Luciano:
